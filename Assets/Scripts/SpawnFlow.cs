@@ -8,12 +8,22 @@ public class SpawnFlow : MonoBehaviour
     private float rate;
     [SerializeField]
     private GameObject[] _prefabs;
+    float timer;
 
     void Start()
     {
-        InvokeRepeating("SpawnMan", 0, rate);
-    }
 
+    }
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer > rate&& PlayerController.instance._speed>0) 
+        {
+            timer = 0;
+            SpawnMan();
+        }
+    }
+   
     private void SpawnMan()
     {
         var _pos = new Vector3(Random.Range(axisZ,-axisZ), 1.4f,200f );

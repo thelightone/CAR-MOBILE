@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.right * Time.deltaTime * _speed2*PlayerController.instance._speed/10);
+        transform.Translate(Vector3.right * Time.deltaTime * _speed2*PlayerController.instance._speed/100);
     }
 
     private void OnTriggerEnter(Collider other)

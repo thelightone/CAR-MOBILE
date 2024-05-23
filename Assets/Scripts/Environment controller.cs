@@ -20,6 +20,9 @@ public class Environmentcontroller : MonoBehaviour
     private float timer = 0;
     private float scoresNum;
 
+    [SerializeField] private TMP_Text _speed;
+    [SerializeField] private RectTransform _spdmtr;
+
     private void Start()
     {
         _roadPos = _road.transform.position;
@@ -27,7 +30,7 @@ public class Environmentcontroller : MonoBehaviour
 
     void Update()
     {
-        var speed = PlayerController.instance._speed;
+        var speed = PlayerController.instance._speed/10;
 
         var newRot = Quaternion.Euler(_sky.transform.rotation.x, _sky.transform.rotation.y + speed, _sky.transform.rotation.z);
         _sky.transform.Rotate(0, speed / 100, 0);
@@ -41,7 +44,7 @@ public class Environmentcontroller : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if (timer > 15)
+            if (timer > 10)
             {
                 StartCoroutine(NewLevel());
                 Time.timeScale += 0.15f;
@@ -49,6 +52,9 @@ public class Environmentcontroller : MonoBehaviour
             scoresNum += Time.deltaTime * 2;
             _scores.text = "SCORES: " + Convert.ToInt32(scoresNum);
         }
+
+        _speed.text = (speed*10).ToString();
+        _spdmtr.rotation = Quaternion.Euler(_spdmtr.rotation.x, _spdmtr.rotation.y, 132-speed*10);
     }
 
     private IEnumerator NewLevel()
