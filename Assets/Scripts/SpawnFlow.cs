@@ -16,7 +16,7 @@ public class SpawnFlow : MonoBehaviour
 
     private void SpawnMan()
     {
-        var _pos = new Vector3(axisZ, 1.4f,200f );
+        var _pos = new Vector3(Random.Range(axisZ,-axisZ), 1.4f,200f );
         int rand = Random.Range(0, _prefabs.Length);
         var obj = Instantiate(_prefabs[rand], _pos, _prefabs[rand].transform.rotation);
         Destroy(obj, 30f);
