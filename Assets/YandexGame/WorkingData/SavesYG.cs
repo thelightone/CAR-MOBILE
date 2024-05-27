@@ -17,6 +17,11 @@ namespace YG
         public bool[] openLevels = new bool[3];
 
         // Ваши сохранения
+        public int HighScore = 0;
+        public bool car1 = true;
+        public bool car2 = false;
+        public bool car3 = false;
+        public bool car4 = false;
 
         // ...
 
@@ -29,6 +34,17 @@ namespace YG
             // Допустим, задать значения по умолчанию для отдельных элементов массива
 
             openLevels[1] = true;
+        }
+
+        public static SavesYG operator +(SavesYG savesYG, SaveData saveData)
+        {
+            savesYG.HighScore = saveData.HighScore;
+            savesYG.car1 = saveData.car1;
+            savesYG.car2 = saveData.car2;
+            savesYG.car3 = saveData.car3;
+            savesYG.car4= saveData.car4;
+
+            return savesYG;
         }
     }
 }

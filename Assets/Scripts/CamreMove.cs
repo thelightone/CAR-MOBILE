@@ -17,6 +17,6 @@ public class CamreMove : MonoBehaviour
     void LateUpdate()
     {
         transform.position = _player.transform.position + _offset;
-        camera.fieldOfView = fov+PlayerController.instance._speed/10;
+        camera.fieldOfView = fov+PlayerController.instance.speed/10;
     }
 }

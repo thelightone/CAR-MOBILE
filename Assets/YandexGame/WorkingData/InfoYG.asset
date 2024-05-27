@@ -190,7 +190,7 @@ MonoBehaviour:
   languages:
     ru: 1
     en: 1
-    tr: 1
+    tr: 0
     az: 0
     be: 0
     he: 0
@@ -216,9 +216,44 @@ MonoBehaviour:
     de: 0
     hi: 0
   fonts:
-    defaultFont: []
-    ru: []
-    en: []
+    defaultFont:
+    - {fileID: 0}
+    ru:
+    - {fileID: 12800000, guid: afbf26f85fc366b47ac4013827808f0b, type: 3}
+    en:
+    - {fileID: 12800000, guid: 8a2b9e2a607dd2143b58c44bc32410b4, type: 3}
+    tr: []
+    az: []
+    be: []
+    he: []
+    hy: []
+    ka: []
+    et: []
+    fr: []
+    kk: []
+    ky: []
+    lt: []
+    lv: []
+    ro: []
+    tg: []
+    tk: []
+    uk: []
+    uz: []
+    es: []
+    pt: []
+    ar: []
+    id: []
+    ja: []
+    it: []
+    de: []
+    hi: []
+  fontsTMP:
+    defaultFont:
+    - {fileID: 0}
+    ru:
+    - {fileID: 11400000, guid: 28f30b62c627d5e47b5c7a7ba88b9caf, type: 2}
+    en:
+    - {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
     tr: []
     az: []
     be: []

@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.right * Time.deltaTime * _speed2*PlayerController.instance._speed/100);
+        transform.Translate(Vector3.right * Time.deltaTime * _speed2*PlayerController.instance.speed/100);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
       
         if (other.gameObject.CompareTag("Finish"))
         {
+            SpawnFlow.Instance._enemyControllers.Remove(gameObject);
             Destroy(gameObject);
         }
     }

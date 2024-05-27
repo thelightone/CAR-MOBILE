@@ -33,10 +33,13 @@ public class AudioManager : MonoBehaviour
 
     public void OnStart()
     {
-        audioSourceNext.clip = engineSound;
-        audioSourceNext.Play();
-        audioSourceNext.volume = 0;
-        StartCoroutine(IncreaseVolume());
+        if (audioOn)
+        {
+            audioSourceNext.clip = engineSound;
+            audioSourceNext.Play();
+            audioSourceNext.volume = 0;
+            StartCoroutine(IncreaseVolume());
+        }
     }
 
     private IEnumerator IncreaseVolume()

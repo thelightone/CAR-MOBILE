@@ -19,7 +19,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"F:/Unity projs/My project/WebGL Builds;;;;;;;;;\"}"
+                "value": "{\"m_Value\":\"C:/Users/asus/Documents/GitHub/CAR-MOBILE/fin;F:/Unity projs/My project/WebGL Builds;;;;;;;;\"}"
             }
         ]
     }

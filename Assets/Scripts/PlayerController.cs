@@ -1,4 +1,5 @@
 ﻿
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +12,8 @@ public class PlayerController : MonoBehaviour
     private ParticleSystem _eff1;
     [SerializeField]
     private ParticleSystem _eff2;
-
-    public float _speed = 0;
+    private float _speed;
+    public float speed { get { return _speed; }  set { if (value > 0) _speed = value; else _speed = 0; } }
     public float _TurnInput;
     private float _ForwardInput;
     private Vector3 _CoM;
@@ -40,18 +41,39 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject _loseScreen;
 
+    private Vector3 startPos;
+    private Quaternion startRot;
+
+    //TURBO
+    private bool turboUse;
+    [SerializeField] private Slider turboSlider;
+    [SerializeField] private ParticleSystem turboPs;
+    private float turboCharge=0;
+    private float acc = 1;
+
+    private bool damaged;
+
     void Start()
     {
+        startPos = transform.position;
+        startRot = transform.rotation;
+
         instance = this;
         startZ = transform.position.z;
         _r = GetComponent<Rigidbody>();
         _rotation = transform.rotation;
+        acc = 1;
     }
 
     private void OnDisable()
 
     {
-        _speed = 0;
+        speed = 0;
+        _CoM.z = _TurnInput / 3;
+        _CoM.y = 0;
+        _CoM.x = 0;
+        _r.centerOfMass = _CoM;
+        _r.WakeUp();
     }
 
     void Update()
@@ -62,11 +84,6 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(newPos.x, newPos.y, startZ);
 
             // настройка центра тяжести для реалистичного поведения при поворотах
-            _CoM.z = _TurnInput / 3;
-            _CoM.y = 0;
-            _CoM.x = 0;
-            _r.centerOfMass = _CoM;
-            _r.WakeUp();
 
             if (transform.position.y > 10)
                 return;
@@ -81,13 +98,13 @@ public class PlayerController : MonoBehaviour
                 _ForwardInput = 0;
                 AudioManager.Instance.OnStop();
             }
-            if (_speed > 0 && _ForwardInput == 0)
+            if (speed > 0 && _ForwardInput == 0)
             {
-                _speed -= 1f;
+                speed -= 2f;
             }
-            if (_speed < _maxSpeed && _ForwardInput == 1)
+            if (speed < _maxSpeed && _ForwardInput == 1)
             {
-                _speed += 1f;
+                speed += acc;
             }
 
             if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
@@ -101,26 +118,56 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.D))
             {
                 _TurnInput = 1;
+
             }
 
+            if (Input.GetKeyDown(KeyCode.Space) && !turboUse)
+            {
+                acc = 2;
+                _maxSpeed = 170;
+                turboUse = true;
+                turboPs.Play();
+            }
 
+            if (Input.GetKeyUp(KeyCode.Space) || (turboUse && turboCharge<1))
+            {
+                acc = 1;
+                _maxSpeed = 120;
+                turboUse = false;
+                turboPs.Stop();
+            }
 
+            if (!turboUse)
+            {
+                turboCharge += 0.5f;
+                if (speed>120)
+                {
+                    _speed -= 3;
+                }
+            }
+            else if (turboUse)
+            {
+                turboCharge -= 2;
+            }
+
+            turboSlider.value = turboCharge;
 
             // transform.Translate(Vector3.right * Time.deltaTime * _speed);
-            if (_TurnInput != 0)
+            if (_TurnInput != 0 && speed>0)
             {
+                speed -= acc;
                 _elapsedTime = 0;
                 _rotation2 = transform.rotation;
 
-                _r.AddForce(Vector3.right * 30 * _TurnInput);
+                _r.AddForce(Vector3.right * 30 * _TurnInput, ForceMode.Acceleration);
 
                 //transform.Translate(Vector3.back * Time.deltaTime * _speed*_TurnInput/2);
 
                 var rot = transform.rotation.eulerAngles;
-                Debug.Log(rot);
+              
                 if (rot.y > 240 && rot.y < 300)
                 {
-                    transform.Rotate(transform.eulerAngles * _TurnInput * Time.deltaTime / 300 * _speed);
+                    transform.Rotate(transform.eulerAngles * _TurnInput * Time.deltaTime / 300 * speed);
                 }
             }
             else
@@ -159,8 +206,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && !damaged)
         {
+            damaged = true;
+            speed -= 50;
+            StartCoroutine(Damaged());
             health--;
             hpslider.value = health;
             _dam.Play();
@@ -171,18 +221,44 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-    private void Death()
+
+    private IEnumerator Damaged()
+    {
+        yield return new WaitForSeconds(1);
+        damaged = false;
+    }
+
+    public void Death()
     {
         _eff1.Stop();
         _eff2.Stop();
 
+        _TurnInput = 0;
         _ForwardInput = 0;
+
+        _r.velocity = Vector3.zero;
+        _r.angularVelocity = Vector3.zero;
 
         dead = true;
         _deathEff.Play();
-        _speed = 0;
-
+        speed = 0;
+        AudioManager.Instance.OnStop();
         _loseScreen.SetActive(true);
         
+        Environmentcontroller.instance.Finish();
+    }
+
+    public void Revive()
+    {
+        _loseScreen.SetActive(false);
+        damaged = true;
+        SpawnFlow.Instance.Clear();
+        transform.position = startPos;
+        transform.rotation = startRot;
+        health = 3;
+        dead = false;
+        StartCoroutine(Damaged());
+
+
     }
 }
