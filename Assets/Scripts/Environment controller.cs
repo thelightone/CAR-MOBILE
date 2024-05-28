@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using YG;
+
 
 public class Environmentcontroller : MonoBehaviour
 {
@@ -63,11 +63,11 @@ public class Environmentcontroller : MonoBehaviour
             scoresNum += Time.deltaTime * 2;
 
 
-            var lang = YandexGame.savesData.language;
-            if (lang == "ru")
-                _scores.text = "Œ◊ »: " + Convert.ToInt32(scoresNum);
-            else
-                _scores.text = "SCORES: " + Convert.ToInt32(scoresNum);
+            //var lang = YandexGame.savesData.language;
+            //if (lang == "ru")
+            //    _scores.text = "Œ◊ »: " + Convert.ToInt32(scoresNum);
+            //else
+            //    _scores.text = "SCORES: " + Convert.ToInt32(scoresNum);
 
         }
 
@@ -85,11 +85,11 @@ public class Environmentcontroller : MonoBehaviour
         {
             var curShift = colorAdj.hueShift.value;
             level++;
-            var lang = YandexGame.savesData.language;
-            if (lang == "ru")
-                _textLevel.text = "”–Œ¬≈Õ‹ " + level;
-            else
-                _textLevel.text = "LEVEL " + level;
+        //    var lang = YandexGame.savesData.language;
+            //if (lang == "ru")
+            //    _textLevel.text = "”–Œ¬≈Õ‹ " + level;
+            //else
+            //    _textLevel.text = "LEVEL " + level;
 
 
             float elapsedTime = 0;
@@ -107,17 +107,17 @@ public class Environmentcontroller : MonoBehaviour
     public void Finish()
     {
 
-        var saveSystem = new YGSaveSystem();
+        //var saveSystem = new YGSaveSystem();
 
-        int curHs = saveSystem.Load().HighScore;
+        //int curHs = saveSystem.Load().HighScore;
 
-        if (curHs < scoresNum)
-         {
-        SaveData data = saveSystem.Load();
-        data.HighScore = Convert.ToInt32(scoresNum);
-            saveSystem.Save(data);
-            YandexGame.NewLeaderboardScores("Scores", Convert.ToInt32(scoresNum));
-        }
+        //if (curHs < scoresNum)
+        // {
+        //SaveData data = saveSystem.Load();
+        //data.HighScore = Convert.ToInt32(scoresNum);
+        //    saveSystem.Save(data);
+        //    YandexGame.NewLeaderboardScores("Scores", Convert.ToInt32(scoresNum));
+        //}
     }
 
 }

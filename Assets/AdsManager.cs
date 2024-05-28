@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using YG;
+
 
 public class AdsManager : MonoBehaviour
 {
-    private YGSaveSystem saveSystem;
+
     [SerializeField] private HighScore highscore;
 
     [SerializeField] private VolumeProfile volume;
@@ -18,18 +18,18 @@ public class AdsManager : MonoBehaviour
         {
             colorAdj.hueShift.value = -35;
         }
-        YandexGame.RewardVideoEvent += Revive;
+        //YandexGame.RewardVideoEvent += Revive;
     }
 
     private void OnDisable()
     {
-        YandexGame.RewardVideoEvent -= Revive;
+       // YandexGame.RewardVideoEvent -= Revive;
 
     }
 
     public void StartNew()
     {
-        YandexGame.FullscreenShow();
+      //  YandexGame.FullscreenShow();
         StartCoroutine(Load());
     }
 
@@ -46,41 +46,41 @@ public class AdsManager : MonoBehaviour
 
     public void ShowRewarded(int id)
     {
-        YandexGame.RewVideoShow(id);
+       // YandexGame.RewVideoShow(id);
         //Revive(id);
     }
 
     public void ResetProgress()
     {
-        saveSystem = new YGSaveSystem();
-        saveSystem.ResetSaves();
+       // saveSystem = new YGSaveSystem();
+       // saveSystem.ResetSaves();
         highscore.Load();
     }
 
     public void Revive(int id)
     {
 
-        saveSystem = new YGSaveSystem();
-        SaveData saveData = saveSystem.Load();
+     //   saveSystem = new YGSaveSystem();
+     //   SaveData saveData = saveSystem.Load();
         
-        switch (id)
-        {
-            case 0:
-                StartCoroutine(ReviveCor());
-                break;
-            case 1:
-                saveData.car2 = true;
-                break;
-            case 2:
-                saveData.car3 = true;
-                break;
-            case 3:
-                saveData.car4 = true;
-                break;
-        }
+        //switch (id)
+        //{
+        //    case 0:
+        //        StartCoroutine(ReviveCor());
+        //        break;
+        //    case 1:
+        //        saveData.car2 = true;
+        //        break;
+        //    case 2:
+        //        saveData.car3 = true;
+        //        break;
+        //    case 3:
+        //        saveData.car4 = true;
+        //        break;
+        //}
 
-        saveSystem.Save(saveData);
-        saveData = saveSystem.Load();
+        //saveSystem.Save(saveData);
+        //saveData = saveSystem.Load();
 
         highscore.Load();
     }

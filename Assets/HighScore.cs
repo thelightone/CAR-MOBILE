@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
+
 
 public class HighScore : MonoBehaviour
 {
@@ -17,11 +17,10 @@ public class HighScore : MonoBehaviour
     [SerializeField] private GameObject car40;
     [SerializeField] private GameObject car41;
 
-    YGSaveSystem saveSystem ;
     void Start()
     {
-        saveSystem = new YGSaveSystem();
-        YandexGame.GetDataEvent += Load;
+        ///saveSystem = new YGSaveSystem();
+        //YandexGame.GetDataEvent += Load;
         Load();
     }
 
@@ -32,26 +31,26 @@ public class HighScore : MonoBehaviour
 
     public void Load()
     {
-        saveSystem = new YGSaveSystem();
-        SaveData data = saveSystem.Load();
+        //saveSystem = new YGSaveSystem();
+        //SaveData data = saveSystem.Load();
 
-        var lang =  YandexGame.savesData.language;
-        if (lang=="ru")
-        hs.text = "信饰心: " + data.HighScore.ToString();
-        else
-        hs.text = "HIGHSCORES: " + data.HighScore.ToString();
+        //var lang =  YandexGame.savesData.language;
+        //if (lang=="ru")
+        //hs.text = "信饰心: " + data.HighScore.ToString();
+        //else
+        //hs.text = "HIGHSCORES: " + data.HighScore.ToString();
 
-        car10.SetActive(data.car1);
-        car11.SetActive(!data.car1);
-        car20.SetActive(data.car2);
-        car21.SetActive(!data.car2);
-        car30.SetActive(data.car3);
-        car31.SetActive(!data.car3);
-        car40.SetActive(data.car4);
-        car41.SetActive(!data.car4);
+        //car10.SetActive(data.car1);
+        //car11.SetActive(!data.car1);
+        //car20.SetActive(data.car2);
+        //car21.SetActive(!data.car2);
+        //car30.SetActive(data.car3);
+        //car31.SetActive(!data.car3);
+        //car40.SetActive(data.car4);
+        //car41.SetActive(!data.car4);
     }
     public void SwLang(string lang)
     {
-        YandexGame.SwitchLanguage(lang);
+       // YandexGame.SwitchLanguage(lang);
     }
 }

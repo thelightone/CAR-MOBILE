@@ -1,2 +1,0 @@
-Build path: C:/Users/asus/Documents/GitHub/CAR-MOBILE/fin
-Build number: 7
